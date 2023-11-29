@@ -14,7 +14,7 @@ $Transactions_File = Import-Excel -Path './Transactions_File.xlsx'
 $transactionCustomers = $Transactions_File | Sort-Object 'IS_Customer' | Select-Object 'ID_Customer' -Unique
 
 foreach ($transactionCustomer in $transactionCustomers) {
-    $export = @()
+    $export = [System.Collections.ArrayList]@()
     $currentCustomer = $customers | Where-Object { $_.'ID_Customer' -eq $transactionCustomer.'ID_Customer' }
     # Write-Output "$($currentCustomer.'Billing Contact Name') of $($currentCustomer.'Business Name')"
 
