@@ -33,8 +33,9 @@ foreach ($transactionCustomer in $transactionCustomers) {
         }
     }
     $export | ConvertTo-Html | Out-File "$env:USERPROFILE\$($transactionCustomer.'ID_Customer').html"
-    # Start-Process "msedge.exe" "$env:USERPROFILE\$($transactionCustomer.'ID_Customer').html"
+    # Convert an HTML page into a PDF
     Start-Process "msedge.exe" -ArgumentList '--headless', "--print-to-pdf=$env:USERPROFILE\$($transactionCustomer.'ID_Customer').pdf", '--disable-extensions', '--print-to-pdf-no-header', '--disable-popup-blocking', '--run-all-compositor-stages-before-draw', '--disable-checker-imaging', "$env:USERPROFILE\$($transactionCustomer.'ID_Customer').html"
     # Write-Output "Total Cost: $(($export.'Line Cost' | Measure-Object -sum).sum)"
-
+    # Launch PDF with Edge
+    Start-Process "msedge.exe" "$env:USERPROFILE\$($transactionCustomer.'ID_Customer').pdf"
 }
